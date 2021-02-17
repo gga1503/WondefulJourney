@@ -21,6 +21,7 @@ class ArticleController extends Controller
 
     public function listArticle()
     {
+        $articles = Article::paginate(5);
         $categories = Category::all();
 
         return view('home', compact('articles', 'categories'));
