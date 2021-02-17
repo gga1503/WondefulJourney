@@ -47,7 +47,6 @@ class ArticleController extends Controller
 
     public function create(Request $request)
     {
-        echo Auth::user()->id;
         error_log('start create');
         $request->validate([
             'title' => ['required', 'string', 'unique:App\Article,title'],

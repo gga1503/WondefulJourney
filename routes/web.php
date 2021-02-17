@@ -46,7 +46,7 @@ Route::get('/profile', function () {
     $user = Auth::user();
     return view('users.profile', compact('user'));
 });
-Route::put('/profile', [UserController::class, 'update']);
+Route::post('/profile', [UserController::class, 'update']);
 
 Route::get('/list_blog', [ArticleController::class, 'listTitle']);
 Route::get('/delete/{article_id}', 'ArticleController@delete');

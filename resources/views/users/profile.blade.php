@@ -13,7 +13,7 @@
             </div>
             @endif
             <div class="card-body">
-                <form action="/profile" method="PUT" class="px-2">
+                <form action="/profile" method="post" class="px-2">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="txtName" class="col-form-label font-weight-bold">Name:</label>

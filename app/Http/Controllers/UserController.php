@@ -10,13 +10,13 @@ class UserController extends Controller
 {
     public function listUser()
     {
-        $users = User::where('role','User')->get();
+        $users = User::where('role', 'User')->get();
         return view('admins.list_user', compact('users'));
     }
 
     public function delete($id)
     {
-        $users =User::where('id', $id)->first();
+        $users = User::where('id', $id)->first();
         if ($users != null) {
             $users->delete();
             return redirect('/list_user');
@@ -27,19 +27,16 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        $user = User::find(Auth::user()->id);
-
-        return $user;
-
-        $user->name= $request->input('name');
+        $user = User::findOrFail(Auth::user()->id);
+        $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
 
-        // $user->save();
+        $user->save();
 
-        // return view('users.profile');
+        return redirect('/profile');
     }
-    
+
     public function getLogin(Request $request)
     {
         return view('login');
@@ -54,7 +51,7 @@ class UserController extends Controller
         ]);
 
         $credentials = $request->only('role', 'email', 'password');
-        
+
         if (Auth::attempt($credentials)) {
             if (Auth::user()->role == 'Admin') {
                 return redirect('/list_user');
@@ -63,7 +60,7 @@ class UserController extends Controller
             }
         }
 
-       return redirect('/login')->with('flash_message_error', 'Invalid Username or Password');
+        return redirect('/login')->with('flash_message_error', 'Invalid Username or Password');
     }
 
     public function getRegister()
@@ -74,6 +71,7 @@ class UserController extends Controller
 
     public function create(Request $request): \Illuminate\Http\RedirectResponse
     {
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:255'],
@@ -82,12 +80,11 @@ class UserController extends Controller
             'confirmed_password' => ['required', 'min:5', 'same:password']
         ]);
 
-        $user = new User([
-            'name' => $request->input('name'),
-            'phone' => $request->input('phone'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-        ]);
+        $user = new User;
+           $user-> name = $request->input('name');
+           $user->phone =$request->input('phone');
+           $user-> email = $request->input('email');
+           $user-> password = bcrypt($request->input('password'));
 
         $user->save();
 
