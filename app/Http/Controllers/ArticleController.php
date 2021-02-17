@@ -14,14 +14,14 @@ class ArticleController extends Controller
 {
     public function listTitle()
     {
-        $articles = Article::paginate(4);
+        $articles = Article::paginate(2);
 
         return view('users.list_blog', compact('articles'));
     }
 
     public function listArticle()
     {
-        $articles = Article::paginate(6);
+        $articles = Article::paginate(5);
         $categories = Category::all();
 
         return view('home', compact('articles', 'categories'));
