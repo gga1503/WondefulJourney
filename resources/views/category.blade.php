@@ -23,8 +23,5 @@
         </div>
     </div>
     @endforeach
-    <div class="pagination justify-content-center">
-        {{$category->links()}}
-    </div>
 </div>
 @endsection
